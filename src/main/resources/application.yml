@@ -1,0 +1,10 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: docker-demo
+  profiles: dev
+  messages:
+    basename: i18n/message
+    encoding: UTF-8
