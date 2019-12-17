@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8-jre-alpine
 
 ENV JAR_NAME docker-demo
 
@@ -8,7 +8,7 @@ COPY target/${JAR_NAME}.jar app.jar
 
 # 设置时区
 ENV TZ Asia/Shanghai
-RUN lb -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # 设置语言
 RUN echo "export LC_ALL=zh_CN.UTF-8" >> /etc/profile
