@@ -3,17 +3,20 @@
 <!-- scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true -->
 <!-- scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。 -->
 <!-- debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
+
+<!--logback.xml加载早于application.property-->
+<!--logback-spring.xml加载晚于application.property-->
 <configuration  scan="true" scanPeriod="60 seconds">
 
-    <springProperty name="appName" scope="context" source="spring.application.name" defaultValue="unkonow" />
-    <springProperty name="serverPort" scope="context" source="server.port" defaultValue="0" />
+    <springProperty name="appName" scope="context" source="spring.application.name" defalultValue="default"/>
+    <springProperty name="serverPort" scope="context" source="server.port" />
+
 
     <!-- name的值是变量的名称，value的值时变量定义的值。通过定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。 -->
     <property name="log.path" value="project/log/${appName}" />
     <property name="filePrefix" value="${appName}-${serverPort}" />
 
-    <contextName>docker-demo</contextName>
-
+    <contextName>${appName}</contextName>
 
     <!-- 彩色日志 -->
     <!-- 彩色日志依赖的渲染类 -->
