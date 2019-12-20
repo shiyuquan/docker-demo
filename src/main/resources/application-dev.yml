@@ -15,9 +15,9 @@ spring:
         health-check-url: http://localhost:9000/actuator/health
         tags: version=1.0
         # 是否使用指定IP地址，默认为 false
-        prefer-agent-address: true
+        # prefer-agent-address: true
         # 指定 IP 地址
-        ip-address: localhost
+        # ip-address: localhost
         # 配置服务注册
         register: true
         # 是否启用服务发现
