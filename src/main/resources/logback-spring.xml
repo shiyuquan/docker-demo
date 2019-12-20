@@ -12,7 +12,7 @@
     <property name="log.path" value="project/log/${appName}" />
     <property name="filePrefix" value="${appName}-${serverPort}" />
 
-    <contextName>${appName}</contextName>
+    <contextName>docker-demo</contextName>
 
 
     <!-- 彩色日志 -->

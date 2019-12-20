@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        # 注册到consul的服务名称，多个服务指定同一个名字，表示是一个集群，集群提供有负载均衡的功能
+        service-name: docker-demo
+        # 为健康检查的url,由consul定时调用一次判断服务是否可用
+        health-check-path: /actuator/health
+        # 注册的服务ID
+        instance-id: docker-demo:9000
+        # 检查间隔时间
+        health-check-interval: 15s
+        health-check-url: http://localhost:9000/actuator/health
+        tags: version=1.0
+        # 是否使用指定IP地址，默认为 false
+        prefer-agent-address: true
+        # 指定 IP 地址
+        ip-address: localhost
+        # 配置服务注册
+        register: true
+        # 是否启用服务发现
+        enabled: true
