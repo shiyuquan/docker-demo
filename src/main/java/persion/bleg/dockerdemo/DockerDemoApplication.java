@@ -14,16 +14,7 @@ public class DockerDemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(DockerDemoApplication.class, args);
 
-        log.debug("debug");
-
-        log.info("info");
-
-        log.error("error");
-
-        log.warn("warn");
-
-        log.trace("trace");
-
+        log.info("服务启动成功！");
     }
 
 }

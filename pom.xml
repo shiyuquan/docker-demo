@@ -16,11 +16,32 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <mybatis-plus.version>3.3.0</mybatis-plus.version>
         <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
+        <swagger.version>2.9.1</swagger.version>
+        <druid.version>1.1.21</druid.version>
+        <lombok.version>1.18.10</lombok.version>
+        <fastjson.version>1.2.62</fastjson.version>
     </properties>
 
+    <!-- dependencyManagement用于锁定jar包版本
+        那么为什么要锁定jar包版本呢？
+        首先我们要知道maven项目是可以有父子依赖关系的，假设现在有项目A和项目B，
+        我们可以让项目B依赖项目A，那么项目A就是父项目，项目B就是子项目
+        所以父项目A中的所有jar包就会被传递到子项目B中，假设父项目A把spring5版本的jar包传递到了子项目B中，
+        而子项目B却不想使用spring5版本，它想使用spring4版本，则它就可以再导入spring4版本的jar包，
+        因为子项目B在它的项目中直接导入jar包是直接依赖，而父项目A传递过去的jar包是传递依赖，
+        所以直接依赖的jar包就会覆盖掉传递依赖的jar包，即子项目B可以使用spring4版本的jar包
+        那么现在问题来了，子项目和父项目使用的spring版本不一样，这不是搞事情吗，这种情况肯定是不行的
+        所以我们就要在父项目中锁定jar包版本，这样即使子项目又导入了不同版本的jar包，
+        也不会覆盖掉父项目传递过去的jar包版本，子项目只能使用父项目传递过去的jar包版本，
+        这样就能保证子项目和父项目jar包版本的一致性
+
+        注意：dependencyManagement只有锁定jar包的功能，它并没有导入jar包的功能
+        所以我们还要在dependencyManagement标签外，再定义dependencies标签，导入jar包的坐标 -->
     <dependencyManagement>
         <dependencies>
+            <!-- spring cloud -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -28,20 +49,74 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!-- mybatis-plus -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- swagger -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <!-- druid 数据源 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
+    <!-- 全局依赖，子模块会继承引用 -->
     <dependencies>
+
+        <!-- redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- 加载jdbc连接数据库 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <!-- consul -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-consul-discovery</artifactId>
         </dependency>
 
-        <!--健康检查依赖此包-->
+        <!-- 健康检查依赖此包 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -59,6 +134,76 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- mybatis-plus -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+
+        <!-- swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+
+        <!-- druid 数据源 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
+        <!-- 加载postgresql驱动 -->
+        <!--<dependency>-->
+        <!--    <groupId>org.postgresql</groupId>-->
+        <!--    <artifactId>postgresql</artifactId>-->
+        <!--</dependency>-->
+
+        <!-- 加载mysql驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!-- netty：网络编程包。 https://mvnrepository.com/artifact/io.netty/netty-all -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.44.Final</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -69,15 +214,77 @@
                     <include>**/*</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
         </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <!-- 在部署的时候更新仓库中的元数据，告诉仓库该版本是最新的发布版 -->
+                    <updateReleaseInfo>true</updateReleaseInfo>
+                </configuration>
+            </plugin>
+            <!-- 提供项目自动将源码打包并发布的功能 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 执行测试用例的插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <!-- 过滤后缀为pkcs12、jks的证书文件 -->
+                    <nonFilteredFileExtensions>
+                        <!--<nonFilteredFileExtension>pkcs12</nonFilteredFileExtension>-->
+                        <nonFilteredFileExtension>cer</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>pem</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>pfx</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
         </plugins>
 
         <finalName>docker-demo</finalName>
     </build>
+
+    <!-- 指定Maven发布的位置 -->
+    <distributionManagement>
+        <repository>
+            <id>rdc-releases</id>
+            <url>https://repo.rdc.aliyun.com/repository/116450-release-3wlQLE/</url>
+        </repository>
+        <snapshotRepository>
+            <id>rdc-snapshots</id>
+            <url>https://repo.rdc.aliyun.com/repository/116450-snapshot-SOwFvN/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
