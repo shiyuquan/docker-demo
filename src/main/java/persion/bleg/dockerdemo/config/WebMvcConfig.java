@@ -6,6 +6,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import static persion.bleg.dockerdemo.constants.DefalutConstant.ENCRYPT_BODY_FLAG;
+
 /**
  * @author shiyuquan
  * @since 2019/12/23 3:57 下午
@@ -23,7 +25,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedOrigins("*")
                 .allowedHeaders("*")
                 .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
-                .exposedHeaders("encryption",
+                .exposedHeaders(ENCRYPT_BODY_FLAG,
                         "access-control-allow-headers",
                         "access-control-allow-methods",
                         "access-control-allow-origin",

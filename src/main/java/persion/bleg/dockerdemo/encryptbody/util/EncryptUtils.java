@@ -1,10 +1,8 @@
 package persion.bleg.dockerdemo.encryptbody.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
-import persion.bleg.dockerdemo.encryptbody.annotation.EncryptBody;
 import persion.bleg.dockerdemo.encryptbody.config.SecretKeyConfig;
 import persion.bleg.dockerdemo.util.*;
 
@@ -12,9 +10,8 @@ import persion.bleg.dockerdemo.util.*;
  * @author shiyuquan
  * @since 2020/3/19 9:51 上午
  */
+@Slf4j
 public class EncryptUtils {
-
-    private static final Logger log = LoggerFactory.getLogger(EncryptUtils.class);
 
     private EncryptUtils() {}
 

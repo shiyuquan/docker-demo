@@ -1,8 +1,7 @@
 package persion.bleg.dockerdemo.encryptbody.advice;
 
 import com.alibaba.fastjson.JSON;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -12,7 +11,6 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-import persion.bleg.dockerdemo.constants.SHAType;
 import persion.bleg.dockerdemo.encryptbody.annotation.EncryptBody;
 import persion.bleg.dockerdemo.encryptbody.config.SecretKeyConfig;
 import persion.bleg.dockerdemo.util.*;
@@ -21,11 +19,9 @@ import persion.bleg.dockerdemo.util.*;
  * @author shiyuquan
  * @since 2020/3/2 12:29 下午
  */
+@Slf4j
 @ControllerAdvice
 public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<Object> {
-
-
-    private static final Logger log = LoggerFactory.getLogger(EncryptResponseBodyAdvice.class);
 
     private boolean encrypt;
 

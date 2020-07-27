@@ -5,11 +5,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import persion.bleg.dockerdemo.constants.SHAType;
 
+import static persion.bleg.dockerdemo.constants.DefalutConstant.ENCRYPT_CONFIG_NAME;
+
 /**
+ * 接口加密配置类
+ *
  * @author shiyuquan
  * @since 2020/3/2 12:16 下午
  */
-@ConfigurationProperties(prefix = "encrypt")
+@ConfigurationProperties(prefix = ENCRYPT_CONFIG_NAME)
 @Configuration
 @Data
 public class SecretKeyConfig{

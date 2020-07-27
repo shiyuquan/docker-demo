@@ -1,5 +1,7 @@
 package persion.bleg.dockerdemo.constants;
 
+import persion.bleg.dockerdemo.base.IMessage;
+
 import static persion.bleg.dockerdemo.constants.DefalutConstant.RESPONSE_FAILED_CODE;
 import static persion.bleg.dockerdemo.constants.DefalutConstant.RESPONSE_SUCCESS_CODE;
 
@@ -9,7 +11,7 @@ import static persion.bleg.dockerdemo.constants.DefalutConstant.RESPONSE_SUCCESS
  * @author shiyuquan
  * @since 2020/3/19 4:15 下午
  */
-public enum MessageKeycode {
+public enum MessageKeycode implements IMessage {
 
     SUCCESS(RESPONSE_SUCCESS_CODE, "success"),
     FAILED(RESPONSE_SUCCESS_CODE, "failed"),
@@ -26,6 +28,7 @@ public enum MessageKeycode {
         this.msg = msg;
     }
 
+    @Override
     public Integer getCode() {
         return code;
     }
@@ -34,6 +37,7 @@ public enum MessageKeycode {
         this.code = code;
     }
 
+    @Override
     public String getMsg() {
         return msg;
     }

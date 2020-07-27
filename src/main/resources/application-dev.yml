@@ -86,7 +86,10 @@ spring:
         min-idle: 0
         # 空闲链接检测线程检测周期。如果为负值，表示不运行检测线程。（单位：毫秒，默认为-layer）
         time-between-eviction-runs: 6000
-
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
 
 
 # mp配置 see：https://mybatis.plus/config/#mapperlocations
@@ -99,6 +102,7 @@ mybatis-plus:
     db-config:
       id-type: uuid
 
+# 接口加密解密配置
 encrypt:
     open: true # 是否开启加密 true  or  false
     showLog: true # 是否打印加解密log true  or  false
@@ -108,7 +112,32 @@ encrypt:
     rsaPublicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCwTvYRYHRkNvSHWEvAuwrgR1bLasU5luNO7YGkeuLce1ZaCbBQkalvHIdhaHtfeEcRA6BqmwUTQDpvFu3V7SDZJR7XXcFVzugo+pH5TpIVD15zcYnxQFhkauL/fACRa1Ux5raYhGdV6E9aiMuxVmo7RK3grK1XeTLDGH+UOVYzpwIDAQAB
     rsaPivateKey: MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBALBO9hFgdGQ29IdYS8C7CuBHVstqxTmW407tgaR64tx7VloJsFCRqW8ch2Foe194RxEDoGqbBRNAOm8W7dXtINklHtddwVXO6Cj6kflOkhUPXnNxifFAWGRq4v98AJFrVTHmtpiEZ1XoT1qIy7FWajtEreCsrVd5MsMYf5Q5VjOnAgMBAAECgYBUm2/mYt04Ak9SbALeWGQdwN5b+77tpgUrKTrfjcE0gVOtHZ0o7N3cXlpxWkxqQjQIbC8dOYsz88yW5u/3izYJcpmKgE0lt0aBuXKrvJx8TcUxzzYbyiQP1ftCnRruREfEZqK8K1Na/XnUGGm1vZOSVX101O/0PyXICdDXS7k8AQJBANm6LY/CkVRHvF07N1vh/g9K77TTBKSpK2o4HZqwdXHtdlUHClZOD6ToFeMuN6dSQcGI4CrBZf3yGIMNkD/MiQECQQDPTOsasTXZIQ8nEBf1x3n6vZOwJa8Vr8KVOmZ56EP2wFaQ3M6Ec2FxnXeVoURsF3Aqy7RhQgmdjc6EPyoldNSnAkEAtrpT5qUqhws1gSFjko+WQ4tmpeG7sd3we9LgtaSGzLi4aR/hgxE8e+/z/pgZSSn12dFgIUHysS/vdn15pLGqAQJBAIqJpx1hjNEc7Nl4Qer5cqWFiGvR416k5W+BZfbWqIUBKVkKl+GgkmCxkben3Og4CbgwBs5wqahnmrp61BnQKEUCQQDUhgIbKH44ytMNT6MGTd6tEHpx0dD90nBsi2OcC1ZYOruXojyVLfXeHU5jGSyF0XzHDKfGBCEvxeMfnEOb0n5g
 
+# 恶意请求配置
+malicious-request:
+  open: false
+  safety-num: 50
+  limited-time: 60000
+  time-interval: 1000
 
+# minio文件系统
+minio:
+  url: http://192.168.103.121:8000
+  access-key: admin
+  secret-key: admin123456
+  bucket-name: test
 
-
+# fdfs
+fastdfs:
+  connect_timeout_in_seconds: 5
+  network_timeout_in_seconds: 30
+  charset: UTF-8
+  http_anti_steal_token: false
+  http_secret_key: FastDFS1234567890
+  http_tracker_http_port: 80
+  tracker_servers: 192.168.103.150:22122
+  connection_pool:
+    enabled: true
+    max_count_per_entry: 500
+    max_idle_time: 3600
+    max_wait_time_in_ms: 1000
 

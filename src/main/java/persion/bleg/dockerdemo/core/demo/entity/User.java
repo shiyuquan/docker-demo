@@ -4,12 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import persion.bleg.dockerdemo.base.BaseEntity;
-
-import java.util.UUID;
 
 /**
  * @author shiyuquan
@@ -19,6 +17,7 @@ import java.util.UUID;
 @Setter
 @TableName("t_user")
 @ApiModel(value = "User", description = "测试用户表")
+@ToString
 public class User extends BaseEntity {
 
     @TableId(type = IdType.ASSIGN_UUID)

@@ -2,14 +2,13 @@ package persion.bleg.dockerdemo.core.demo.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.netflix.ribbon.proxy.annotation.Http;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Request;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import persion.bleg.dockerdemo.core.demo.entity.User;
 import persion.bleg.dockerdemo.core.demo.mapper.UserMapper;
 
-import javax.servlet.http.HttpServlet;
 import java.util.List;
 
 /**
@@ -20,20 +19,43 @@ import java.util.List;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    private RedisTemplate<String,Object> redisTemplate;
+
+    @Autowired
+    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
+    /**
+     * 查询用户列表
+     *
+     * @return 用户数组
+     */
     @Override
     public List<User> selectUser() {
         return baseMapper.selectUser();
     }
 
+    /**
+     * 根据名称查询用户
+     *
+     * @param name 用户名
+     * @return 用户
+     */
     @Override
     public User selectByName(String name) {
         return getOne(new QueryWrapper<User>().eq("name", name));
     }
 
+    /**
+     * 新增用户
+     *
+     * @param user 用户信息
+     * @return 成功与否
+     */
     @Override
     public boolean add(User user) {
         return save(user);
     }
-
 
 }

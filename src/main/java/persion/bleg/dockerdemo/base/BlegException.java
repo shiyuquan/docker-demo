@@ -1,8 +1,5 @@
 package persion.bleg.dockerdemo.base;
 
-import persion.bleg.dockerdemo.constants.MessageKeycode;
-import persion.bleg.dockerdemo.util.MessageUtils;
-
 /**
  * 自定义异常类
  *
@@ -24,6 +21,11 @@ public class BlegException extends RuntimeException implements IResult<Object> {
         super();
     }
 
+    public BlegException(String msg) {
+        this(500, msg, "");
+    }
+
+
     public BlegException(Integer code, String msg) {
         this(code, msg, "");
     }
@@ -36,11 +38,11 @@ public class BlegException extends RuntimeException implements IResult<Object> {
         this.data = data;
     }
 
-    public BlegException(MessageKeycode kc) {
+    public BlegException(IMessage kc) {
         this(kc.getCode(), kc.getMsg(), "");
     }
 
-    public BlegException(MessageKeycode kc, Object data) {
+    public BlegException(IMessage kc, Object data) {
         this(kc.getCode(), kc.getMsg(), data);
     }
 

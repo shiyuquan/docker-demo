@@ -1,7 +1,6 @@
 package persion.bleg.dockerdemo.encryptbody.advice;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpInputMessage;
@@ -19,10 +18,9 @@ import java.lang.reflect.Type;
  * @author shiyuquan
  * @since 2020/3/2 12:26 下午
  */
+@Slf4j
 @ControllerAdvice
 public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
-
-    private static final Logger log = LoggerFactory.getLogger(DecryptRequestBodyAdvice.class);
 
     /** 默认不解密 */
     private boolean decrypt;

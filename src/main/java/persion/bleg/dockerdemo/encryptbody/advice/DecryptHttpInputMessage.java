@@ -1,7 +1,6 @@
 package persion.bleg.dockerdemo.encryptbody.advice;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -20,9 +19,8 @@ import persion.bleg.dockerdemo.util.RSAUtils;
  * @author shiyuquan
  * @since 2020/3/2 12:22 下午
  */
+@Slf4j
 public class DecryptHttpInputMessage implements HttpInputMessage {
-
-    private static final Logger log = LoggerFactory.getLogger(DecryptHttpInputMessage.class);
 
     private HttpHeaders headers;
     private InputStream body;
