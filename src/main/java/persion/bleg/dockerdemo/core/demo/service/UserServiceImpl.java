@@ -1,11 +1,10 @@
 package persion.bleg.dockerdemo.core.demo.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import persion.bleg.dockerdemo.config.mp.IServiceImpl;
 import persion.bleg.dockerdemo.core.demo.entity.User;
 import persion.bleg.dockerdemo.core.demo.mapper.UserMapper;
 
@@ -17,7 +16,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl extends IServiceImpl<UserMapper, User> implements UserService {
 
     private RedisTemplate<String,Object> redisTemplate;
 
@@ -44,7 +43,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public User selectByName(String name) {
-        return getOne(new QueryWrapper<User>().eq("name", name));
+        return getOne(wrapper().eq("name", name));
     }
 
     /**

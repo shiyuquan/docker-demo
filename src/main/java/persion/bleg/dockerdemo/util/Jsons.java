@@ -10,7 +10,6 @@ import org.springframework.beans.BeanWrapperImpl;
 import persion.bleg.dockerdemo.base.BlegException;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -162,15 +161,5 @@ public class Jsons {
     }
 
     public static void main(String[] args) throws Exception {
-
-        String d = "2020-01-01";
-        String e = "2020-08-08";
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-        Date t1 = format.parse(d);
-        Date t2 = format.parse(e);
-
-        System.err.println(t1.before(t2));
     }
 }
