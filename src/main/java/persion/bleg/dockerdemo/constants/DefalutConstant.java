@@ -37,4 +37,7 @@ public class DefalutConstant {
 
     public static final String FAST_PROPERTY = "fastdfs";
 
+    /** MQTT */
+    public static final String MQTT = "mqtt";
+
 }

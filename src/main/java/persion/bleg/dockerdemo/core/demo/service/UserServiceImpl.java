@@ -1,13 +1,16 @@
 package persion.bleg.dockerdemo.core.demo.service;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import persion.bleg.dockerdemo.config.mp.IServiceImpl;
 import persion.bleg.dockerdemo.core.demo.entity.User;
 import persion.bleg.dockerdemo.core.demo.mapper.UserMapper;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -32,6 +35,7 @@ public class UserServiceImpl extends IServiceImpl<UserMapper, User> implements U
      */
     @Override
     public List<User> selectUser() {
+
         return baseMapper.selectUser();
     }
 
@@ -55,6 +59,23 @@ public class UserServiceImpl extends IServiceImpl<UserMapper, User> implements U
     @Override
     public boolean add(User user) {
         return save(user);
+    }
+
+    /**
+     * 用户上传图片
+     *
+     * @param id   用户id
+     * @param file 用户上传的图片
+     * @return 成功与否
+     */
+    @Override
+    public Boolean addImage(String id, MultipartFile file) {
+        try {
+            return update(new UpdateWrapper<User>().eq("id", id).set("image", file.getBytes()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

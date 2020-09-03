@@ -1,6 +1,7 @@
 package persion.bleg.dockerdemo.core.demo.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
 import persion.bleg.dockerdemo.core.demo.entity.User;
 
 import java.util.List;
@@ -34,4 +35,12 @@ public interface UserService extends IService<User> {
      */
     boolean add(User user);
 
+    /**
+     * 用户上传图片
+     *
+     * @param id 用户id
+     * @param file 用户上传的图片
+     * @return 成功与否
+     */
+    Boolean addImage(String id, MultipartFile file);
 }

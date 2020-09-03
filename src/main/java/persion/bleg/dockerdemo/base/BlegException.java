@@ -30,6 +30,9 @@ public class BlegException extends RuntimeException implements IResult<Object> {
         this(code, msg, "");
     }
 
+    public BlegException(String msg, Object data) {
+        this(500, msg, data);
+    }
 
     public BlegException(Integer code, String msg, Object data) {
         super(msg);

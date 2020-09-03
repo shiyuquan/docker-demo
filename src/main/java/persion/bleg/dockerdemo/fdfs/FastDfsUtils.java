@@ -37,19 +37,19 @@ public class FastDfsUtils {
         }
     }
 
-    private static final String CONFIG_FILENAME = "fdfs_client.conf";
-
-    // 加载文件
-    static {
-
-        try {
-            ClientGlobal.init(CONFIG_FILENAME);
-            log.info("初始化 Fastdfs Client 配置信息：{}", ClientGlobal.configInfo());
-
-        } catch (Exception e) {
-            log.error(e.toString(), e);
-        }
-    }
+    // private static final String CONFIG_FILENAME = "fdfs_client.conf";
+    //
+    // // 加载文件
+    // static {
+    //
+    //     try {
+    //         ClientGlobal.init(CONFIG_FILENAME);
+    //         log.info("初始化 Fastdfs Client 配置信息：{}", ClientGlobal.configInfo());
+    //
+    //     } catch (Exception e) {
+    //         log.error(e.toString(), e);
+    //     }
+    // }
 
     /**
      * 上传文件

@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import persion.bleg.dockerdemo.base.BlegException;
 import persion.bleg.dockerdemo.base.IResult;
 import persion.bleg.dockerdemo.base.Result;
@@ -48,6 +49,13 @@ public class UserController {
     @PostMapping(value = "/user")
     public IResult<Boolean> add(@RequestBody User user) {
         return new Result<Boolean>().success(userService.add(user));
+    }
+
+    @ApiOperation(value = "用户上传图片")
+    @PostMapping(value = "/{id}/uploadImage")
+    public IResult<Boolean> addImage(@PathVariable("id") String id,
+                                     @RequestParam("file") MultipartFile file) {
+        return new Result<Boolean>().success(userService.addImage(id, file));
     }
 
     @ApiOperation(value = "test")

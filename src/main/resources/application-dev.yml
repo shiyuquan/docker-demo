@@ -90,7 +90,32 @@ spring:
     multipart:
       max-file-size: -1
       max-request-size: -1
-
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    publisher-returns: true
+    publisher-confirm-type: correlated
+    listener:
+      type: simple
+      simple:
+        acknowledge-mode: manual #手动确认
+        prefetch: 1 #限制每次发送一条数据。
+        concurrency: 3 #同一个队列启动几个消费者
+        max-concurrency: 3 #启动消费者最大数量
+        # 重试策略相关配置 消费端的配置
+        retry:
+          enabled: true # 支持重试
+          max-attempts: 3 # 重试次数
+          stateless: false
+          #时间策略乘数因子
+          multiplier: 1.0
+          initial-interval: 1000ms
+          max-interval: 1000ms # 最大重试时间间隔
+        # 消息重新入队
+        default-requeue-rejected: true
 
 # mp配置 see：https://mybatis.plus/config/#mapperlocations
 mybatis-plus:
@@ -140,4 +165,23 @@ fastdfs:
     max_count_per_entry: 500
     max_idle_time: 3600
     max_wait_time_in_ms: 1000
+
+# MQTT配置信息
+mqtt:
+  # MQTT-用户名
+  userName: guest
+  # MQTT-密码
+  password: guest
+  # MQTT-服务器连接地址，如果有多个，用逗号隔开，如：tcp://127.0.0.1:61613，tcp://192.168.2.133:61613
+  url: tcp://127.0.0.1:1883
+  # MQTT-连接服务器默认客户端ID，客户端连接mqtt服务器，clientId不能重复，用随机数随机
+  clientId: docker-demo
+  # MQTT-默认的消息推送主题，实际可在调用接口时指定
+  defaultTopic: amq.topic
+  # 连接超时
+  completionTimeout: 3000
+  # 默认的质量选项 0：
+  defaultQos: 1
+  # 心跳间隔 s
+  keepAliveInterval: 30
 

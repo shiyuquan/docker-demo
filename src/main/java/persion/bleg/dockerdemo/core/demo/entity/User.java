@@ -29,4 +29,6 @@ public class User extends BaseEntity {
 
     private String nickName;
 
+    private byte[] image;
+
 }
