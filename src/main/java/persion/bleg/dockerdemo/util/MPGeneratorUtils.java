@@ -121,7 +121,7 @@ public class MPGeneratorUtils {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         // 是否跳过视图
         strategy.setSkipView(true);
-        // 表前缀 mysql不用设置，pgsql对应schema
+        // 表前缀
         strategy.setTablePrefix("t_");
         // 自定义父类
         strategy.setSuperEntityClass(BaseEntity.class);

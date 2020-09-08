@@ -101,7 +101,7 @@ public class UserController {
      * @return {@link Boolean}
      */
     @ApiOperation(value = "根据名称查询")
-    @GetMapping(value = "/{id}")
+    @DeleteMapping(value = "/{id}")
     public IResult<Boolean> deleteById(@PathVariable("id") Integer id) {
         return new Result<Boolean>().success(userService.deleteById(id));
     }

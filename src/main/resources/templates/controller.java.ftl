@@ -123,7 +123,7 @@ public class ${table.controllerName} {
      * @return {@link Boolean}
      */
     @ApiOperation(value = "根据id删除")
-    @GetMapping(value = "/{id}")
+    @DeleteMapping(value = "/{id}")
     public IResult<Boolean> deleteById(@PathVariable("id") Integer id) {
         return new Result<Boolean>().success(${service}.deleteById(id));
     }
