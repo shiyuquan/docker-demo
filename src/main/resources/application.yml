@@ -5,7 +5,8 @@ spring:
   application:
     name: docker-demo
   profiles:
-    active: dev
+#    active: dev
+    active: '@maven.profile.active@'
   messages:
     basename: i18n/message
     encoding: UTF-8

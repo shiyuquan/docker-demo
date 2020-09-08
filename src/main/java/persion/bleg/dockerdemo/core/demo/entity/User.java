@@ -20,8 +20,8 @@ import persion.bleg.dockerdemo.base.BaseEntity;
 @ToString
 public class User extends BaseEntity {
 
-    @TableId(type = IdType.ASSIGN_UUID)
-    private String id;
+    @TableId(type = IdType.AUTO)
+    private Integer id;
 
     private String name;
 
@@ -30,5 +30,7 @@ public class User extends BaseEntity {
     private String nickName;
 
     private byte[] image;
+
+    public static final String ID = "id";
 
 }

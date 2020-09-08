@@ -1,0 +1,187 @@
+spring:
+  cloud:
+    consul:
+      # consul 服务的地址，若服务在docker内，使用docker内置的地址
+      host: localhost
+      #      host: host.docker.internal
+      port: 8500
+      discovery:
+        # 注册到consul的服务名称，多个服务指定同一个名字，表示是一个集群，集群提供有负载均衡的功能
+        service-name: docker-demo
+        # 为健康检查的url,由consul定时调用一次判断服务是否可用
+        health-check-path: /actuator/health
+        # 注册的服务ID
+        instance-id: docker-demo:9000
+        # 检查间隔时间
+        health-check-interval: 15s
+        health-check-url: http://localhost:9000/actuator/health
+        tags: version=1.0
+        # 是否使用指定IP地址，默认为 false
+        # prefer-agent-address: true
+        # 指定 IP 地址
+        # ip-address: localhost
+        # 配置服务是否注册到consul
+        register: true
+        # 是否启用服务发现
+        enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/docker-demo
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      validation-query: select 1
+      #初始化连接池的连接数量 大小，最小，最大
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      #配置获取连接等待超时的时间
+      max-wait: 60000
+      #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 30000
+      # 是否缓存preparedStatement，也就是PSCache  官方建议MySQL下建议关闭   个人建议如果想用SQL防火墙 建议打开
+      pool-prepared-statements: false
+      max-pool-prepared-statement-per-connection-size: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filter:
+        stat:
+          merge-sql: true
+          slow-sql-millis: 5000
+      #3.基础监控配置
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        #设置不统计哪些URL
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+        session-stat-enable: true
+        session-stat-max-count: 100
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: true
+        #设置监控页面的登录名和密码
+        login-username: admin
+        login-password: admin
+        allow: 127.0.0.1
+        #deny: 192.168.1.100
+  redis:
+    host: localhost
+    port: 6379
+    password: root
+    database: 0
+    # 连接超时时长（毫秒）
+    timeout: 6000
+    jedis:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 空闲链接检测线程检测周期。如果为负值，表示不运行检测线程。（单位：毫秒，默认为-layer）
+        time-between-eviction-runs: 6000
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    publisher-returns: true
+    publisher-confirm-type: correlated
+    listener:
+      type: simple
+      simple:
+        acknowledge-mode: manual #手动确认
+        prefetch: 1 #限制每次发送一条数据。
+        concurrency: 3 #同一个队列启动几个消费者
+        max-concurrency: 3 #启动消费者最大数量
+        # 重试策略相关配置 消费端的配置
+        retry:
+          enabled: true # 支持重试
+          max-attempts: 3 # 重试次数
+          stateless: false
+          #时间策略乘数因子
+          multiplier: 1.0
+          initial-interval: 1000ms
+          max-interval: 1000ms # 最大重试时间间隔
+        # 消息重新入队
+        default-requeue-rejected: true
+
+# mp配置 see：https://mybatis.plus/config/#mapperlocations
+mybatis-plus:
+  mapper-locations: classpath*:persion.bleg.dockerdemo/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+  global-config:
+    db-config:
+      id-type: uuid
+
+# 接口加密解密配置
+encrypt:
+  open: true # 是否开启加密 true  or  false
+  showLog: true # 是否打印加解密log true  or  false
+  aesKey: 1234567890123456
+  aesVi: 1234567890123456
+  desKey: 123456
+  rsaPublicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCwTvYRYHRkNvSHWEvAuwrgR1bLasU5luNO7YGkeuLce1ZaCbBQkalvHIdhaHtfeEcRA6BqmwUTQDpvFu3V7SDZJR7XXcFVzugo+pH5TpIVD15zcYnxQFhkauL/fACRa1Ux5raYhGdV6E9aiMuxVmo7RK3grK1XeTLDGH+UOVYzpwIDAQAB
+  rsaPivateKey: MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBALBO9hFgdGQ29IdYS8C7CuBHVstqxTmW407tgaR64tx7VloJsFCRqW8ch2Foe194RxEDoGqbBRNAOm8W7dXtINklHtddwVXO6Cj6kflOkhUPXnNxifFAWGRq4v98AJFrVTHmtpiEZ1XoT1qIy7FWajtEreCsrVd5MsMYf5Q5VjOnAgMBAAECgYBUm2/mYt04Ak9SbALeWGQdwN5b+77tpgUrKTrfjcE0gVOtHZ0o7N3cXlpxWkxqQjQIbC8dOYsz88yW5u/3izYJcpmKgE0lt0aBuXKrvJx8TcUxzzYbyiQP1ftCnRruREfEZqK8K1Na/XnUGGm1vZOSVX101O/0PyXICdDXS7k8AQJBANm6LY/CkVRHvF07N1vh/g9K77TTBKSpK2o4HZqwdXHtdlUHClZOD6ToFeMuN6dSQcGI4CrBZf3yGIMNkD/MiQECQQDPTOsasTXZIQ8nEBf1x3n6vZOwJa8Vr8KVOmZ56EP2wFaQ3M6Ec2FxnXeVoURsF3Aqy7RhQgmdjc6EPyoldNSnAkEAtrpT5qUqhws1gSFjko+WQ4tmpeG7sd3we9LgtaSGzLi4aR/hgxE8e+/z/pgZSSn12dFgIUHysS/vdn15pLGqAQJBAIqJpx1hjNEc7Nl4Qer5cqWFiGvR416k5W+BZfbWqIUBKVkKl+GgkmCxkben3Og4CbgwBs5wqahnmrp61BnQKEUCQQDUhgIbKH44ytMNT6MGTd6tEHpx0dD90nBsi2OcC1ZYOruXojyVLfXeHU5jGSyF0XzHDKfGBCEvxeMfnEOb0n5g
+
+# 恶意请求配置
+malicious-request:
+  open: false
+  safety-num: 50
+  limited-time: 60000
+  time-interval: 1000
+
+# minio文件系统
+minio:
+  url: http://192.168.103.121:8000
+  access-key: admin
+  secret-key: admin123456
+  bucket-name: test
+
+# fdfs
+fastdfs:
+  connect_timeout_in_seconds: 5
+  network_timeout_in_seconds: 30
+  charset: UTF-8
+  http_anti_steal_token: false
+  http_secret_key: FastDFS1234567890
+  http_tracker_http_port: 80
+  tracker_servers: 192.168.103.150:22122
+  connection_pool:
+    enabled: true
+    max_count_per_entry: 500
+    max_idle_time: 3600
+    max_wait_time_in_ms: 1000
+
+# MQTT配置信息
+mqtt:
+  # MQTT-用户名
+  userName: guest
+  # MQTT-密码
+  password: guest
+  # MQTT-服务器连接地址，如果有多个，用逗号隔开，如：tcp://127.0.0.1:61613，tcp://192.168.2.133:61613
+  url: tcp://127.0.0.1:1883
+  # MQTT-连接服务器默认客户端ID，客户端连接mqtt服务器，clientId不能重复，用随机数随机
+  clientId: docker-demo
+  # MQTT-默认的消息推送主题，实际可在调用接口时指定
+  defaultTopic: amq.topic
+  # 连接超时
+  completionTimeout: 3000
+  # 默认的质量选项 0：
+  defaultQos: 1
+  # 心跳间隔 s
+  keepAliveInterval: 30
+

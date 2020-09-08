@@ -1,5 +1,6 @@
 package persion.bleg.dockerdemo.core.demo.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,23 +33,77 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * 查询列表
+     *
+     * @return {@link List} {@link User}
+     */
     @ApiOperation(value = "列表查询")
-    @GetMapping(value = "/users")
-    public IResult<List<User>> selectUser() {
-        return new Result<List<User>>().success(userService.selectUser());
+    @GetMapping(value = "/list")
+    public IResult<List<User>> selectUserList() {
+        return new Result<List<User>>().success(userService.selectUserList());
     }
 
+    /**
+     * 分页查询
+     *
+     * @param page 页数
+     * @param size 页大小
+     * @return {@link IPage} {@link User}
+     */
+    @ApiOperation(value = "分页查询")
+    @GetMapping(value = "/page")
+    public IResult<IPage<User>> selectUserPage(@RequestParam Integer page, @RequestParam Integer size) {
+        return new Result<IPage<User>>().success(userService.selectUserPage(page, size));
+    }
+
+    /**
+     * 根据id查询
+     *
+     * @param id 主键
+     * @return {@link User}
+     */
     @ApiOperation(value = "根据名称查询")
-    @GetMapping(value = "/user/{name}")
-    public IResult<User> selectByName(@PathVariable("name") String name) {
-        return new Result<User>().success(userService.selectByName(name));
+    @GetMapping(value = "/{id}")
+    public IResult<User> selectById(@PathVariable("id") Integer id) {
+        return new Result<User>().success(userService.selectById(id));
     }
 
+    /**
+     * 新增对象
+     *
+     * @param user user
+     * @return {@link Boolean}
+     */
     @DecryptBody
     @ApiOperation(value = "新增")
-    @PostMapping(value = "/user")
+    @PostMapping(value = "")
     public IResult<Boolean> add(@RequestBody User user) {
-        return new Result<Boolean>().success(userService.add(user));
+        return new Result<Boolean>().success(userService.addUser(user));
+    }
+
+    /**
+     * 修改对象
+     *
+     * @param user user
+     * @return {@link Boolean}
+     */
+    @ApiOperation(value = "修改")
+    @PutMapping(value = "")
+    public IResult<Boolean> updateById(@RequestBody User user) {
+        return new Result<Boolean>().success(userService.updateUserById(user));
+    }
+
+    /**
+     * 根据id删除
+     *
+     * @param id 主键
+     * @return {@link Boolean}
+     */
+    @ApiOperation(value = "根据名称查询")
+    @GetMapping(value = "/{id}")
+    public IResult<Boolean> deleteById(@PathVariable("id") Integer id) {
+        return new Result<Boolean>().success(userService.deleteById(id));
     }
 
     @ApiOperation(value = "用户上传图片")
@@ -70,19 +125,5 @@ public class UserController {
         return ids.toString();
     }
 
-    public static void main(String[] args) {
-
-        System.err.println("in");
-        int a = 1;
-        switch (a) {
-            case 1:
-                System.err.println("1");
-            case 2:
-                System.err.println("2");
-            default:
-                System.err.println("def");
-        }
-        System.err.println("out");
-    }
 
 }
