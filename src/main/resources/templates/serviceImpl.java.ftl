@@ -93,7 +93,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      */
     @Override
     public Boolean deleteById(Integer id) {
-        return deleteById(id);
+        return removeById(id);
     }
 
 }

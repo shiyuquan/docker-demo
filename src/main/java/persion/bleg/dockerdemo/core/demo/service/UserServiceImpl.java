@@ -132,7 +132,7 @@ public class UserServiceImpl extends IServiceImpl<UserMapper, User> implements U
      */
     @Override
     public Boolean deleteById(Integer id) {
-        return deleteById(id);
+        return removeById(id);
     }
 
 }

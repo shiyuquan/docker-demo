@@ -40,7 +40,7 @@ import static persion.bleg.dockerdemo.constants.DefalutConstant.DEFAULT_API_PREF
 <#else>
 @Controller
 </#if>
-@RequestMapping(DEFAULT_API_PREFIX + "/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
+@RequestMapping(DEFAULT_API_PREFIX + "/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath?replace("DO","")}</#if>")
 <#if kotlin>
 class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
 <#else>
