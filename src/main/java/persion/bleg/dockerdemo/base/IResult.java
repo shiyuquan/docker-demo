@@ -1,7 +1,5 @@
 package persion.bleg.dockerdemo.base;
 
-import java.io.Serializable;
-
 /**
  * 自定义返回体
  *
@@ -18,6 +16,8 @@ public interface IResult<T> {
 
     /** 获取返回数据 */
     T getData();
+
+    String getException();
 
     default String string() {
         return "{ \n" +

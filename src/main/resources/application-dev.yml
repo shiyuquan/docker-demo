@@ -116,6 +116,14 @@ spring:
           max-interval: 1000ms # 最大重试时间间隔
         # 消息重新入队
         default-requeue-rejected: true
+  data:
+    # mongo 配置
+    mongodb:
+      uri: mongodb://admin:root@localhost:27017/demo
+
+  cache:
+    redis:
+      cache-null-values:
 
 # mp配置 see：https://mybatis.plus/config/#mapperlocations
 mybatis-plus:
@@ -126,6 +134,7 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: uuid
+      select-strategy: not_null
 
 # 接口加密解密配置
 encrypt:
@@ -184,4 +193,6 @@ mqtt:
   defaultQos: 1
   # 心跳间隔 s
   keepAliveInterval: 30
-
+#
+#logging:
+#  config: classpath:log/spring-log4j2-dev.xml

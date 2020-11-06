@@ -3,8 +3,10 @@ package persion.bleg.dockerdemo.core.demo.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import persion.bleg.dockerdemo.base.BlegException;
 import persion.bleg.dockerdemo.base.IResult;
@@ -21,17 +23,20 @@ import static persion.bleg.dockerdemo.constants.DefalutConstant.DEFAULT_API_PREF
  * @author shiyuquan
  * @since 2019/12/23 2:32 下午
  */
+@Slf4j
 @Api(tags = "测试用户接口")
 @RestController
 @RequestMapping(DEFAULT_API_PREFIX + "/user")
 public class UserController {
 
-    private UserService userService;
+    // private static final Logger log = LoggerFactory.getLogger("AsyncLogger");
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+    private RestTemplate restTemplate;
+
+    private final UserService userService;
+
+    public UserController(UserService userService) {this.userService = userService;}
 
     /**
      * 查询列表
@@ -116,14 +121,14 @@ public class UserController {
     @ApiOperation(value = "test")
     @GetMapping(value = "/test")
     public IResult<User> test() {
+        log.info("usc - ddd");
         throw new BlegException(500, "ssdsd");
     }
 
     @ApiOperation(value = "test2")
     @PostMapping(value = "/test2")
-    public String test2(@RequestParam List<String> ids) {
-        return ids.toString();
+    public String test2(@RequestBody String data) {
+        return data;
     }
-
 
 }

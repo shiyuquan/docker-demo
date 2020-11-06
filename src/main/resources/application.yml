@@ -12,4 +12,4 @@ spring:
     encoding: UTF-8
 
 logging:
-  config: classpath:spring-logback.xml
+  config: classpath:log/spring-log4j2-@maven.profile.active@.xml

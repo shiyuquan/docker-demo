@@ -5,7 +5,6 @@ import org.springframework.util.StringUtils;
 import persion.bleg.dockerdemo.base.BlegException;
 
 import java.io.*;
-import java.util.List;
 import java.util.zip.*;
 
 /**
@@ -183,9 +182,8 @@ public class ZipUtils {
     }
 
     public static void main(String[] args) {
-        List<String> l = null;
-        for (String s : l) {
-            System.err.println(s);
-        }
+        String s = "";
+        boolean b = org.apache.commons.lang3.StringUtils.isEmpty(s);
+        System.err.println(b);
     }
 }

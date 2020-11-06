@@ -1,12 +1,8 @@
 package persion.bleg.dockerdemo.base;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import persion.bleg.dockerdemo.constants.MessageKeycode;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import persion.bleg.dockerdemo.util.MessageUtils;
 
-import static persion.bleg.dockerdemo.constants.DefalutConstant.RESPONSE_FAILED_CODE;
-import static persion.bleg.dockerdemo.constants.DefalutConstant.RESPONSE_SUCCESS_CODE;
 import static persion.bleg.dockerdemo.constants.MessageKeycode.FAILED;
 import static persion.bleg.dockerdemo.constants.MessageKeycode.SUCCESS;
 
@@ -26,6 +22,9 @@ public class Result<T> implements IResult<T> {
 
     /** 返回内容 */
     private T data;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String exception;
 
     public Result() {}
 
@@ -61,7 +60,7 @@ public class Result<T> implements IResult<T> {
         return this;
     }
 
-    public Result<T> success(MessageKeycode kc, T data) {
+    public Result<T> success(IMessage kc, T data) {
         this.code = kc.getCode();
         this.msg = MessageUtils.get(kc.getMsg());
         this.data = data;
@@ -82,7 +81,7 @@ public class Result<T> implements IResult<T> {
         return this;
     }
 
-    public Result<T> err(MessageKeycode kc) {
+    public Result<T> err(IMessage kc) {
         this.code = kc.getCode();
         this.msg = MessageUtils.get(kc.getMsg());
         this.data = null;
@@ -108,6 +107,10 @@ public class Result<T> implements IResult<T> {
         this.data = data;
     }
 
+    public void setException(String exception) {
+        this.exception = exception;
+    }
+
     @Override
     public Integer getCode() {
         return code;
@@ -121,5 +124,10 @@ public class Result<T> implements IResult<T> {
     @Override
     public T getData() {
         return data;
+    }
+
+    @Override
+    public String getException() {
+        return exception;
     }
 }

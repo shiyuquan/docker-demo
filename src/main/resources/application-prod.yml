@@ -185,3 +185,6 @@ mqtt:
   # 心跳间隔 s
   keepAliveInterval: 30
 
+
+#logging:
+#  config: classpath:log/spring-log4j2-prod.xml

@@ -6,7 +6,7 @@ package persion.bleg.dockerdemo.base;
  * @author shiyuquan
  * @since 2020/3/19 4:53 下午
  */
-public class BlegException extends RuntimeException implements IResult<Object> {
+public class BlegException extends RuntimeException {
 
     /** 错误码 */
     private Integer code;
@@ -53,7 +53,6 @@ public class BlegException extends RuntimeException implements IResult<Object> {
         this(ir.getCode(), ir.getMsg(), ir.getData());
     }
 
-    @Override
     public Integer getCode() {
         return code;
     }
@@ -62,7 +61,6 @@ public class BlegException extends RuntimeException implements IResult<Object> {
         this.code = code;
     }
 
-    @Override
     public String getMsg() {
         return msg;
     }
@@ -71,7 +69,6 @@ public class BlegException extends RuntimeException implements IResult<Object> {
         this.msg = msg;
     }
 
-    @Override
     public Object getData() {
         return data;
     }

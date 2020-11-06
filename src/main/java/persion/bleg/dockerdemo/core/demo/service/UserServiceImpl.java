@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import persion.bleg.dockerdemo.base.BlegException;
 import persion.bleg.dockerdemo.config.mp.IServiceImpl;
 import persion.bleg.dockerdemo.core.demo.entity.User;
 import persion.bleg.dockerdemo.core.demo.mapper.UserMapper;
@@ -99,7 +100,8 @@ public class UserServiceImpl extends IServiceImpl<UserMapper, User> implements U
      */
     @Override
     public List<User> selectUserList() {
-        return baseMapper.selectList(null);
+        throw new BlegException(501, "msg");
+        // return baseMapper.selectList(wrapper().like(User.ID, null));
     }
 
     /**

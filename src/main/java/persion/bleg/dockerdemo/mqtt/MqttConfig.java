@@ -27,6 +27,8 @@ import org.springframework.messaging.MessageHandler;
  * QoS = 2: 只有一次，确保消息到达并只有一次。消息类型有PUBREC(Publish Received 已收到)、PUBREL(Publish Released 已释放)、
  *          PUBCOMP(Publish Completed已完成)。
  *
+ * 注意：mqtt 并不能保证消息只消费一次，即便是qos=2
+ *
  *
  * @author shiyuquan
  * @since 2020/9/1 10:49 上午
@@ -77,7 +79,14 @@ public class MqttConfig {
         MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler(mqttProperty.getClientId(), mqttPahoClientFactory);
         messageHandler.setAsync(true);
         messageHandler.setDefaultTopic(mqttProperty.getDefaultTopic());
-        // messageHandler.setDefaultRetained(defaultRetained);
+
+        //  保留消息定义：
+        // 如果 publish消息的retain标记位被设置为1，则称该消息为“保留消息”
+        //
+        // Broker对保留消息的处理Broker会存储每个Topic的最后一条保留消息及其Qos，当订阅该Topic的客户端上线后，Broker需要将该消息投递给它。
+        // publish消息时，如果retain值是true，则服务器会一直记忆，哪怕是服务器重启。
+        messageHandler.setDefaultRetained(mqttProperty.isDefaultRetained());
+
         messageHandler.setDefaultQos(mqttProperty.getDefaultQos());
 
         return messageHandler;
