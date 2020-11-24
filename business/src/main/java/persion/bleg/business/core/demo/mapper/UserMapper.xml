@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="persion.bleg.business.core.demo.mapper.UserMapper">
+
+    <select id="selectUser" parameterType="string" resultType="persion.bleg.business.core.demo.entity.User">
+        SELECT
+         id,
+         name,
+         age,
+         nick_name as nickName,
+         creator,
+         create_time as createTime,
+         modifier,
+         modify_time as modifyTime
+        FROM t_user;
+    </select>
+
+</mapper>

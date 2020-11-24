@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>docker-demo</artifactId>
+        <groupId>persion.bleg</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>business</artifactId>
+
+    <properties>
+        <persion.bleg.version>0.0.1-SNAPSHOT</persion.bleg.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>persion.bleg</groupId>
+            <artifactId>boot-web</artifactId>
+            <version>${persion.bleg.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>persion.bleg</groupId>
+            <artifactId>boot-mybatis</artifactId>
+            <version>${persion.bleg.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>persion.bleg</groupId>
+            <artifactId>boot-redis</artifactId>
+            <version>${persion.bleg.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>persion.bleg</groupId>
+            <artifactId>boot-util</artifactId>
+            <version>${persion.bleg.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

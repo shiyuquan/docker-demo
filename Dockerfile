@@ -4,7 +4,7 @@ ENV JAR_NAME docker-demo
 
 VOLUME /tmp
 
-COPY target/${JAR_NAME}.jar app.jar
+COPY business/target/${JAR_NAME}.jar app.jar
 
 # 设置时区
 ENV TZ Asia/Shanghai
