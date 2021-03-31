@@ -59,7 +59,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @return {@link ${entity}}
      */
     @Override
-    public ${entity} selectById(Integer id) {
+    public ${entity} selectById(Long id) {
         return getOne(wrapper().eq(${entity}.ID, id));
     }
 
@@ -92,7 +92,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @return {@link Boolean}
      */
     @Override
-    public Boolean deleteById(Integer id) {
+    public Boolean deleteById(Long id) {
         return removeById(id);
     }
 

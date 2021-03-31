@@ -122,7 +122,7 @@ public class UserController {
     @GetMapping(value = "/test")
     public IResult<User> test() {
         log.info("usc - ddd");
-        throw new BlegException(500, "ssdsd");
+        throw new BlegException("ssdsd");
     }
 
     @ApiOperation(value = "test2")

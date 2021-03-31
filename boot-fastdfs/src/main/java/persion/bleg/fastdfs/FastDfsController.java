@@ -176,7 +176,7 @@ public class FastDfsController {
                 fastDFSUtils.deleteFile(p.getGroupName(), p.getFileId());
                 redisTemplate.delete(k);
             } catch (Exception e) {
-                throw new BlegException(500, "删除失败", e);
+                throw new BlegException("删除失败", e);
             }
         });
         redisUtils.delete(redisKey + "*");
@@ -224,7 +224,7 @@ public class FastDfsController {
             redisTemplate.opsForValue().set(redisKey, p);
         } catch (Exception e) {
             log.error("error", e);
-            throw new BlegException(500, "上传失败", e);
+            throw new BlegException("上传失败", e);
         }
         long end = System.currentTimeMillis();
         log.info("time: {}", end - start);
@@ -306,7 +306,7 @@ public class FastDfsController {
             log.error("文件合并失败", e);
             log.info("删除文件夹{}", tempFolder);
             Files.deleteDir(tempFolder);
-            throw new BlegException(500, "文件合并失败", e);
+            throw new BlegException("文件合并失败", e);
         }
         // redisUtils.delete(redisKey + "*");
         log.info("删除文件夹{}", tempFolder);

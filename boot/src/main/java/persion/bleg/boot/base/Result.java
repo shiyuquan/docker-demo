@@ -14,7 +14,7 @@ import static persion.bleg.boot.constant.MessageKeycode.SUCCESS;
 public class Result<T> implements IResult<T> {
 
     /** 返回码 */
-    private Integer code;
+    private String code;
 
     /** 返回消息 */
     private String msg;
@@ -26,23 +26,31 @@ public class Result<T> implements IResult<T> {
 
     public Result() {}
 
-    public Result(Integer code) {
+    public Result(String code) {
         this.code = code;
         this.msg = "";
         this.data = null;
     }
 
-    public Result(Integer code, String msg) {
+    public Result(String code, String msg) {
         this.code = code;
         this.msg = msg;
         this.data = null;
     }
 
-    public Result(Integer code, String msg, T data) {
+    public Result(String code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
     }
+
+    public Result(String code, String msg, T data, String exception) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+        this.exception = exception;
+    }
+
 
     public Result<T> success() {
         this.code = SUCCESS.getCode();
@@ -65,6 +73,13 @@ public class Result<T> implements IResult<T> {
         return this;
     }
 
+    public Result<T> err() {
+        this.code = FAILED.getCode();
+        this.msg = MessageUtils.get(FAILED.getMsg());
+        this.data = null;
+        return this;
+    }
+
     public Result<T> err(String msg) {
         this.code = FAILED.getCode();
         this.msg = msg;
@@ -72,9 +87,9 @@ public class Result<T> implements IResult<T> {
         return this;
     }
 
-    public Result<T> err(Integer code) {
+    public Result<T> err(String code, String msg) {
         this.code = code;
-        this.msg = MessageUtils.get(FAILED.getMsg());
+        this.msg = msg;
         this.data = null;
         return this;
     }
@@ -93,7 +108,7 @@ public class Result<T> implements IResult<T> {
         throw new BlegException(this);
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -110,7 +125,7 @@ public class Result<T> implements IResult<T> {
     }
 
     @Override
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 

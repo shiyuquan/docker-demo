@@ -19,21 +19,21 @@ public enum MessageKeycode implements IMessage {
 
     ;
 
-    Integer code;
+    String code;
 
     String msg;
 
-    MessageKeycode(Integer code, String msg) {
+    MessageKeycode(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
     @Override
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

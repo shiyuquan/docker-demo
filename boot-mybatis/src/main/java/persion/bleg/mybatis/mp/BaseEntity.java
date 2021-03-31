@@ -1,12 +1,10 @@
-package persion.bleg.dockerdemo.base;
+package persion.bleg.mybatis.mp;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDateTime;
 
 /**
  * 基础实体类，提供基础的实体类字段
@@ -25,7 +23,7 @@ public class BaseEntity {
 
     /** 创建时间 */
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private String createTime;
 
     /** 修改人 */
     @TableField(fill = FieldFill.INSERT_UPDATE)
@@ -33,6 +31,6 @@ public class BaseEntity {
 
     /** 修改时间 */
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime modifyTime;
+    private String modifyTime;
 
 }

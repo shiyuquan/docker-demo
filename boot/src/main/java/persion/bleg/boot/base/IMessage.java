@@ -7,5 +7,5 @@ package persion.bleg.boot.base;
 public interface IMessage {
     String getMsg();
 
-    Integer getCode();
+    String getCode();
 }

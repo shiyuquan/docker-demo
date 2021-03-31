@@ -63,7 +63,7 @@ public class MaliciousRequestFilter implements Filter {
             if (null != lockTime) {
                 log.error("请求过于频繁: {}", lockIpKey);
                 long sub = System.currentTimeMillis() - lockTime;
-                throw new BlegException(500, "请求过于频繁，" + sub + "ms后重新尝试");
+                throw new BlegException("请求过于频繁，" + sub + "ms后重新尝试");
             }
 
             // 定义redis key
@@ -77,7 +77,7 @@ public class MaliciousRequestFilter implements Filter {
                 redisUtils.setWithTtl(lockIpKey, System.currentTimeMillis(), maliciousRequestConfig.getLimitedTime());
 
                 log.error("请求过于频繁: {}", saveKey);
-                throw new BlegException(500, "请求过于频繁");
+                throw new BlegException("请求过于频繁");
             }
             // 将每个请求的详细内容作为key，存放于redis，设置过期时间
             String realKey = saveKey + System.currentTimeMillis();

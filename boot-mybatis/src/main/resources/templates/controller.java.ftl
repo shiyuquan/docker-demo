@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import persion.bleg.business.base.IResult;
-import persion.bleg.business.base.Result;
+import persion.bleg.boot.base.IResult;
+import persion.bleg.boot.base.Result;
 import ${package.Entity}.${entity};
 import ${package.Service}.${table.serviceName};
 
@@ -24,7 +24,7 @@ import ${superControllerClassPackage};
 
 import java.util.List;
 
-import static persion.bleg.business.constants.DefalutConstant.DEFAULT_API_PREFIX;
+import static persion.bleg.boot.constant.DefalutConstant.DEFAULT_API_PREFIX;
 
 /**
  * <p>
@@ -88,7 +88,7 @@ public class ${table.controllerName} {
      */
     @ApiOperation(value = "根据id查询")
     @GetMapping(value = "/{id}")
-    public IResult<${entity}> selectById(@PathVariable("id") Integer id) {
+    public IResult<${entity}> selectById(@PathVariable("id") Long id) {
         return new Result<${entity}>().success(${service}.selectById(id));
     }
 
@@ -124,7 +124,7 @@ public class ${table.controllerName} {
      */
     @ApiOperation(value = "根据id删除")
     @DeleteMapping(value = "/{id}")
-    public IResult<Boolean> deleteById(@PathVariable("id") Integer id) {
+    public IResult<Boolean> deleteById(@PathVariable("id") Long id) {
         return new Result<Boolean>().success(${service}.deleteById(id));
     }
 

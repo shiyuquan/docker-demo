@@ -15,6 +15,9 @@
         <module>boot-amqp</module>
         <module>boot-mongodb</module>
         <module>boot-mqtt</module>
+        <module>bleg-user</module>
+        <module>bleg-common</module>
+        <module>boot-jwt</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -53,6 +56,7 @@
                 <maven.profile.active>prod</maven.profile.active>
             </properties>
         </profile>
+
     </profiles>
 
     <properties>
@@ -153,69 +157,18 @@
             </exclusions>
         </dependency>
 
-        <!--&lt;!&ndash; redis &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.boot</groupId>-->
-        <!--    <artifactId>spring-boot-starter-data-redis</artifactId>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.boot</groupId>-->
-        <!--    <artifactId>spring-boot-starter-data-mongodb</artifactId>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; 加载jdbc连接数据库 &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.boot</groupId>-->
-        <!--    <artifactId>spring-boot-starter-jdbc</artifactId>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; consul &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.cloud</groupId>-->
-        <!--    <artifactId>spring-cloud-starter-consul-discovery</artifactId>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; 健康检查依赖此包 &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.boot</groupId>-->
-        <!--    <artifactId>spring-boot-starter-actuator</artifactId>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <groupId>org.springframework.boot</groupId>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <artifactId>spring-boot-starter-web</artifactId>&ndash;&gt;-->
-
-        <!--&lt;!&ndash;    <exclusions>&ndash;&gt;-->
-        <!--&lt;!&ndash;        &lt;!&ndash; 去掉springboot默认的logback日志框架 &ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;        <exclusion>&ndash;&gt;-->
-        <!--&lt;!&ndash;            <groupId>org.springframework.boot</groupId>&ndash;&gt;-->
-        <!--&lt;!&ndash;            <artifactId>spring-boot-starter-logging</artifactId>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </exclusion>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <exclusion>&ndash;&gt;-->
-        <!--&lt;!&ndash;            <groupId>ch.qos.logback</groupId>&ndash;&gt;-->
-        <!--&lt;!&ndash;            <artifactId>logback-classic</artifactId>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </exclusion>&ndash;&gt;-->
-        <!--&lt;!&ndash;    </exclusions>&ndash;&gt;-->
-        <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
-
         <!-- 引入log4j2依赖，性能是 logback的 10倍 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
+
         <!-- log4j2 异步日志需要的依赖 -->
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
             <version>3.4.2</version>
         </dependency>
-
-
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.boot</groupId>-->
-        <!--    <artifactId>spring-boot-starter-websocket</artifactId>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -229,173 +182,13 @@
             </exclusions>
         </dependency>
 
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.boot</groupId>-->
-        <!--    <artifactId>spring-boot-configuration-processor</artifactId>-->
-        <!--    <optional>true</optional>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.boot</groupId>-->
-        <!--    <artifactId>spring-boot-devtools</artifactId>-->
-        <!--    <optional>true</optional>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash;&lt;!&ndash; spring security &ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <groupId>org.springframework.boot</groupId>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <artifactId>spring-boot-starter-security</artifactId>&ndash;&gt;-->
-        <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
-        <!--&lt;!&ndash;&lt;!&ndash; jwt &ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <groupId>io.jsonwebtoken</groupId>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <artifactId>jjwt</artifactId>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <version>0.9.1</version>&ndash;&gt;-->
-        <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
-
-        <!--&lt;!&ndash; mqtt &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.boot</groupId>-->
-        <!--    <artifactId>spring-boot-starter-integration</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.integration</groupId>-->
-        <!--    <artifactId>spring-integration-stream</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.integration</groupId>-->
-        <!--    <artifactId>spring-integration-mqtt</artifactId>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; amqp的起步依赖 &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.boot</groupId>-->
-        <!--    <artifactId>spring-boot-starter-amqp</artifactId>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; mybatis-plus &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>com.baomidou</groupId>-->
-        <!--    <artifactId>mybatis-plus</artifactId>-->
-        <!--    <version>${mybatis-plus.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--    <groupId>com.baomidou</groupId>-->
-        <!--    <artifactId>mybatis-plus-boot-starter</artifactId>-->
-        <!--    <version>${mybatis-plus.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--    <groupId>com.baomidou</groupId>-->
-        <!--    <artifactId>mybatis-plus-generator</artifactId>-->
-        <!--    <version>${mybatis-plus.version}</version>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; freemarker &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>org.freemarker</groupId>-->
-        <!--    <artifactId>freemarker</artifactId>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; swagger &ndash;&gt;-->
-        <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <groupId>io.springfox</groupId>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <artifactId>springfox-swagger2</artifactId>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <version>${swagger.version}</version>&ndash;&gt;-->
-        <!--&lt;!&ndash;    &lt;!&ndash; 去掉springboot默认的logback日志框架 &ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;    <exclusions>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <exclusion>&ndash;&gt;-->
-        <!--&lt;!&ndash;            <groupId>com.google.guava</groupId>&ndash;&gt;-->
-        <!--&lt;!&ndash;            <artifactId>guava</artifactId>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </exclusion>&ndash;&gt;-->
-        <!--&lt;!&ndash;    </exclusions>&ndash;&gt;-->
-        <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
-        <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <groupId>io.springfox</groupId>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <artifactId>springfox-swagger-ui</artifactId>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <version>${swagger.version}</version>&ndash;&gt;-->
-        <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
-
-        <!--&lt;!&ndash; druid 数据源 &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>com.alibaba</groupId>-->
-        <!--    <artifactId>druid-spring-boot-starter</artifactId>-->
-        <!--    <version>${druid.version}</version>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; lombok &ndash;&gt;-->
+        <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
 
-        <!--&lt;!&ndash; 加载postgresql驱动 &ndash;&gt;-->
-        <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <groupId>org.postgresql</groupId>&ndash;&gt;-->
-        <!--&lt;!&ndash;    <artifactId>postgresql</artifactId>&ndash;&gt;-->
-        <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
-
-        <!--&lt;!&ndash; 加载mysql驱动 &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>mysql</groupId>-->
-        <!--    <artifactId>mysql-connector-java</artifactId>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; netty：网络编程包。 https://mvnrepository.com/artifact/io.netty/netty-all &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>io.netty</groupId>-->
-        <!--    <artifactId>netty-all</artifactId>-->
-        <!--    <version>4.1.44.Final</version>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; https://mvnrepository.com/artifact/com.alibaba/fastjson &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>com.alibaba</groupId>-->
-        <!--    <artifactId>fastjson</artifactId>-->
-        <!--    <version>${fastjson.version}</version>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; minio 分布式存储系统 http://www.minio.org.cn/ &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>io.minio</groupId>-->
-        <!--    <artifactId>minio</artifactId>-->
-        <!--    <version>${minio.version}</version>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>org.apache.commons</groupId>-->
-        <!--    <artifactId>commons-lang3</artifactId>-->
-        <!--    <version>${commons-lang3.version}</version>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; https://mvnrepository.com/artifact/commons-io/commons-io &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>commons-io</groupId>-->
-        <!--    <artifactId>commons-io</artifactId>-->
-        <!--    <version>${commons-io.version}</version>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.apache.commons/commons-compress &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--    <groupId>org.apache.commons</groupId>-->
-        <!--    <artifactId>commons-compress</artifactId>-->
-        <!--    <version>1.20</version>-->
-        <!--</dependency>-->
-
-
-        <!--<dependency>-->
-        <!--    <groupId>org.csource</groupId>-->
-        <!--    <artifactId>fastdfs-client-java</artifactId>-->
-        <!--    <version>1.29-SNAPSHOT</version>-->
-        <!--    &lt;!&ndash; 因为 fastdfs-client-java 使用的也是org.slf4j包，为避免包冲突引起的错误，最好排除  &ndash;&gt;-->
-        <!--    <exclusions>-->
-        <!--        <exclusion>-->
-        <!--            <artifactId>slf4j-log4j12</artifactId>-->
-        <!--            <groupId>org.slf4j</groupId>-->
-        <!--        </exclusion>-->
-        <!--    </exclusions>-->
-        <!--</dependency>-->
 
     </dependencies>
 

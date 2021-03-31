@@ -1,5 +1,7 @@
 package persion.bleg.boot.base;
 
+import persion.bleg.boot.utils.MessageUtils;
+
 /**
  * 自定义异常类
  *
@@ -9,7 +11,7 @@ package persion.bleg.boot.base;
 public class BlegException extends RuntimeException {
 
     /** 错误码 */
-    private Integer code;
+    private String code;
 
     /** 错误消息 */
     private String msg;
@@ -22,19 +24,19 @@ public class BlegException extends RuntimeException {
     }
 
     public BlegException(String msg) {
-        this(500, msg, "");
+        this("500", msg, "");
     }
 
 
-    public BlegException(Integer code, String msg) {
+    public BlegException(String code, String msg) {
         this(code, msg, "");
     }
 
     public BlegException(String msg, Object data) {
-        this(500, msg, data);
+        this("500", msg, data);
     }
 
-    public BlegException(Integer code, String msg, Object data) {
+    public BlegException(String code, String msg, Object data) {
         super(msg);
         this.code = code;
         this.msg = msg;
@@ -42,22 +44,22 @@ public class BlegException extends RuntimeException {
     }
 
     public BlegException(IMessage kc) {
-        this(kc.getCode(), kc.getMsg(), "");
+        this(kc.getCode(), MessageUtils.get(kc.getMsg()), "");
     }
 
     public BlegException(IMessage kc, Object data) {
-        this(kc.getCode(), kc.getMsg(), data);
+        this(kc.getCode(), MessageUtils.get(kc.getMsg()), data);
     }
 
     public BlegException(IResult ir) {
         this(ir.getCode(), ir.getMsg(), ir.getData());
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

@@ -59,7 +59,7 @@ public class SQLUtils {
         TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
 
         List<String> parameters = new ArrayList<>();
-        if (CollectionUtils.isEmpty(parameterMappings)) {
+        if (!CollectionUtils.isEmpty(parameterMappings)) {
             MetaObject metaObject = parameterObject == null ? null : configuration.newMetaObject(parameterObject);
             for (int i = 0; i < parameterMappings.size(); i++) {
                 ParameterMapping parameterMapping = parameterMappings.get(i);
@@ -83,7 +83,7 @@ public class SQLUtils {
                         parameters.add(String.valueOf(value));
                     } else {
                         StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.append("");
+                        stringBuilder.append("'");
                         if (value instanceof Date) {
                             stringBuilder.append(dateTimeFormater.get().format((Date) value));
                         } else if (value instanceof String) {
@@ -124,16 +124,13 @@ public class SQLUtils {
 
     /**
      * 格式化 sql 日志
-     * @param sql sql
      * @param costTime 执行时间
      * @param obj 响应参数
      * @return log
      */
-    public static String formatSqlLog(String sql, long costTime, Object obj) {
+    public static String formatSqlLog(long costTime, Object obj) {
         StringBuilder sb = new StringBuilder();
-        sb.append("\nsql: \n");
-        sb.append(com.alibaba.druid.sql.SQLUtils.formatMySql(sql));
-        sb.append("\ntotal:");
+        sb.append("total: ");
         if (obj instanceof List) {
             List list = (List) obj;
             int count = list.size();
@@ -141,9 +138,21 @@ public class SQLUtils {
         } else if (obj instanceof Integer) {
             sb.append(obj);
         }
-        sb.append("\nexcute time:")
-                .append(costTime)
-                .append(" ms");
+        sb.append("\nexcute time: ")
+          .append(costTime)
+          .append(" ms");
+        return sb.toString();
+    }
+
+    /**
+     * 格式化 sql 日志
+     * @param sql sql
+     * @return log
+     */
+    public static String formatSqlLog(String sql) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nsql: \n");
+        sb.append(com.alibaba.druid.sql.SQLUtils.formatMySql(sql));
         return sb.toString();
     }
 }

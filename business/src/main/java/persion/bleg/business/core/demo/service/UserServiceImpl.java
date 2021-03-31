@@ -100,7 +100,7 @@ public class UserServiceImpl extends IServiceImpl<UserMapper, User> implements U
      */
     @Override
     public List<User> selectUserList() {
-        throw new BlegException(501, "msg");
+        throw new BlegException("msg");
         // return baseMapper.selectList(wrapper().like(User.ID, null));
     }
 

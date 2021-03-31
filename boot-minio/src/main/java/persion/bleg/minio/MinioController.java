@@ -77,14 +77,14 @@ public class MinioController {
         try {
             b = minioClient.bucketExists(bucketName);
         } catch (Exception e) {
-            throw new BlegException(500, "判断桶存在报错了", e);
+            throw new BlegException("判断桶存在报错了", e);
         }
         if (!b) {
             log.info("桶{}不存在，尝试创建桶...", bucketName);
             try {
                 minioClient.makeBucket(bucketName);
             } catch (Exception e) {
-                throw new BlegException(500, "创建桶失败了", e);
+                throw new BlegException("创建桶失败了", e);
             }
             log.info("桶{}创建成功！", bucketName);
         }
@@ -97,7 +97,7 @@ public class MinioController {
             is = file.getInputStream();
             size = is.available();
         } catch (IOException e) {
-            throw new BlegException(500, "流读取失败", e);
+            throw new BlegException("流读取失败", e);
         }
         String fileName = file.getOriginalFilename();
         String contentType = file.getContentType();
@@ -109,7 +109,7 @@ public class MinioController {
             ObjectStat statObject = minioClient.statObject(minioConfig.getBucketName(), fileName);
             res = getObjectInfo(statObject, minioConfig.getBucketName());
         } catch (Exception e) {
-            throw new BlegException(500, "上传失败", e);
+            throw new BlegException("上传失败", e);
         }
         long end = System.currentTimeMillis();
         log.info("time: {}", end - start);
@@ -131,7 +131,7 @@ public class MinioController {
             response.setCharacterEncoding("UTF-8");
             IOUtils.copy(fileInputStream, response.getOutputStream());
         } catch (Exception e) {
-            throw new BlegException(500, "下载失败");
+            throw new BlegException("下载失败");
         }
         long end = System.currentTimeMillis();
         log.info("time: {}", end - start);
@@ -146,7 +146,7 @@ public class MinioController {
         try {
             minioClient.removeObject(minioConfig.getBucketName(), fileName);
         } catch (Exception e) {
-            throw new BlegException(500, "删除失败", e);
+            throw new BlegException("删除失败", e);
         }
         return new Result<String>().success("删除成功");
     }
@@ -164,7 +164,7 @@ public class MinioController {
         try {
             link = minioClient.presignedGetObject(minioConfig.getBucketName(), fileName);
         } catch (Exception e) {
-            throw new BlegException(500, "获取链接失败", e);
+            throw new BlegException("获取链接失败", e);
         }
         return new Result<String>().success(link);
     }
@@ -211,7 +211,7 @@ public class MinioController {
             // 4. 构建返回结果
             result.put("exist", isObjectExists);
         } catch (Exception e) {
-            throw new BlegException(500, "获取分片上传标识错误", e);
+            throw new BlegException("获取分片上传标识错误", e);
         }
 
         long end = System.currentTimeMillis();
@@ -257,7 +257,7 @@ public class MinioController {
             result = getObjectInfo(statObject, bucket);
         } catch (Exception e) {
             log.error("文件合并失败", e);
-            throw new BlegException(500, "文件合并失败", e);
+            throw new BlegException("文件合并失败", e);
         }
         redisUtils.delete(redisKey + "*");
         redisUtils.delete(redisKey2);
@@ -306,7 +306,7 @@ public class MinioController {
             bis = new BufferedInputStream(file.getInputStream());
         } catch (IOException e) {
             log.error("error", e);
-            throw new BlegException(500, "文件流转换失败", e);
+            throw new BlegException("文件流转换失败", e);
         }
         try {
             // 执行分片上传
@@ -322,7 +322,7 @@ public class MinioController {
             redisTemplate.opsForValue().set(redisKey, p);
         } catch (Exception e) {
             log.error("error", e);
-            throw new BlegException(500, "上传失败", e);
+            throw new BlegException("上传失败", e);
         }
         long end = System.currentTimeMillis();
         log.info("time: {}", end - start);

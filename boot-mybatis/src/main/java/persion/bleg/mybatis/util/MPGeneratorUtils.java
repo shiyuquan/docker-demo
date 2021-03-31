@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import lombok.extern.slf4j.Slf4j;
+import persion.bleg.mybatis.mp.BaseEntity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,15 +16,48 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * t_key_code_tree
+ *
  * @author shiyuquan
  * @since 2020/9/7 7:01 下午
  */
 @Slf4j
 public class MPGeneratorUtils {
 
+    /** 项目的根目录 */
+    private static final String PROJECT_PATH = System.getProperty("user.dir");
+    /** 文件输出目录 */
+    private static final String OUTPUT_DIR = PROJECT_PATH + "/bleg-user/src/main/java";
+    /** 包名，文件生成后会在输出目录生成包名文件夹 */
+    private static final String PACKAGE = "core";
+    /** 父包名 */
+    private static final String PARENT_PACKAGE = "persion.bleg.user";
+
+    /** 作者 */
+    private static final String AUTHOR = "shiyuquan";
+
+    /**
+     * db配置
+     */
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/docker-demo";
+    private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String DB_USER_NAME = "root";
+    private static final String DB_PWD = "root";
+
+    /** 要生成的表，用逗号隔开 */
+    private static final String TABLE_NAME = "t_button," + "t_menu," + "t_permission," + "t_role," + "t_user," + "t_user_group";
+    /** 表钱缀 */
+    private static final String TABLE_PREFIX = "t_";
+
+    /** ServiceImpl 父类 */
+    private static final String SUPER_SERVICE_IMPL = "persion.bleg.mybatis.mp.IServiceImpl";
+
+    /** 是否需要公用父类 */
+    private static final Boolean SUPER_ENTITY = false;
+
     public static void main(String[] args) {
-        String projectPath = System.getProperty("user.dir");
-        String tableNames = "t_user";
+        // String projectPath = System.getProperty("user.dir");
+        // String tableNames = "t_user";
 
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
@@ -31,9 +65,9 @@ public class MPGeneratorUtils {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         // 设置文件输出目录
-        gc.setOutputDir(projectPath + "/src/main/java");
+        gc.setOutputDir(OUTPUT_DIR);
         // 设置开发人员
-        gc.setAuthor("shiyuquan");
+        gc.setAuthor(AUTHOR);
         // 是否打开输出目录
         gc.setOpen(false);
         gc.setActiveRecord(false);
@@ -67,18 +101,18 @@ public class MPGeneratorUtils {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/docker-demo");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("root");
+        dsc.setUrl(DB_URL);
+        dsc.setDriverName(DB_DRIVER);
+        dsc.setUsername(DB_USER_NAME);
+        dsc.setPassword(DB_PWD);
         mpg.setDataSource(dsc);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
         // 模块名称，设置之后会在父包名下创建文件夹
-        pc.setModuleName("generator");
+        pc.setModuleName(PACKAGE);
         // 父包名称
-        pc.setParent("persion.bleg.dockerdemo.core");
+        pc.setParent(PARENT_PACKAGE);
         // 自定义包名
         // pc.setController();
         // pc.setEntity();
@@ -121,10 +155,13 @@ public class MPGeneratorUtils {
         // 是否跳过视图
         strategy.setSkipView(true);
         // 表前缀
-        strategy.setTablePrefix("t_");
+        strategy.setTablePrefix(TABLE_PREFIX);
         // 自定义父类
-        // strategy.setSuperEntityClass(BaseEntity.class);
-        strategy.setSuperServiceImplClass("persion.bleg.dockerdemo.config.mp.IServiceImpl");
+
+        if (SUPER_ENTITY) {
+            strategy.setSuperEntityClass(BaseEntity.class);
+        }
+        strategy.setSuperServiceImplClass(SUPER_SERVICE_IMPL);
         strategy.setSuperServiceClass("com.baomidou.mybatisplus.extension.service.IService");
         strategy.setSuperMapperClass("com.baomidou.mybatisplus.core.mapper.BaseMapper");
         // 是否生成字段常量
@@ -140,7 +177,7 @@ public class MPGeneratorUtils {
         // 生成实体时，生成字段注解
         strategy.setEntityTableFieldAnnotationEnable(true);
         // 设置包含的表名
-        strategy.setInclude(tableNames.split(","));
+        strategy.setInclude(TABLE_NAME.split(","));
 
         mpg.setTemplate(templateConfig);
         mpg.setStrategy(strategy);

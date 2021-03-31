@@ -5179,7 +5179,7 @@ public class MyMinioClient {
                 return false;
             }
         } catch (Exception e) {
-            throw new BlegException(500, "minio校验文件存在失败", e);
+            throw new BlegException("minio校验文件存在失败", e);
         }
         return true ;
     }
@@ -5205,7 +5205,7 @@ public class MyMinioClient {
                 }
             }
         } catch (Exception e) {
-            throw new BlegException(500, "校验分片是否存在失败", e);
+            throw new BlegException("校验分片是否存在失败", e);
         }
         return isExist;
     }

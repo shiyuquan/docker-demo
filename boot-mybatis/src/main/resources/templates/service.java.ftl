@@ -41,7 +41,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @param id 主键
      * @return {@link ${entity}}
      */
-    ${entity} selectById(Integer id);
+    ${entity} selectById(Long id);
 
     /**
      * 新增对象
@@ -63,6 +63,6 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @param id 主键
      * @return {@link Boolean}
      */
-    Boolean deleteById(Integer id);
+    Boolean deleteById(Long id);
 }
 </#if>

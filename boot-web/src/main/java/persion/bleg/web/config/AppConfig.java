@@ -3,6 +3,11 @@ package persion.bleg.web.config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -11,6 +16,11 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import javax.net.ssl.SSLContext;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,13 +96,37 @@ public class AppConfig {
     }
 
     /**
-     * todo
      * 忽略ssl的restemplat 配置
+     *
      * 请求https 使用
      */
     @Bean("sslRestemplate")
-    public RestTemplate sslRestTemplate() {
-        return null;
+    public RestTemplate sslRestTemplate() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+        TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
+
+        SSLContext sslContext =
+                org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
+
+        //暂时关闭hostnameVerify
+        SSLConnectionSocketFactory csf =
+                new SSLConnectionSocketFactory(sslContext, new String[]{"TLSv1"}, null, NoopHostnameVerifier.INSTANCE);
+
+        CloseableHttpClient httpClient = HttpClients.custom()
+                                                    .setSSLSocketFactory(csf)
+                                                    .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
+                                                    .build();
+
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+
+        requestFactory.setHttpClient(httpClient);
+
+        //单位为ms 建立连接超时
+        requestFactory.setConnectTimeout(20 * 1000);
+        //单位为ms 建立连接成功后 从服务器读取超时
+        requestFactory.setReadTimeout(20 * 1000);
+        requestFactory.setConnectionRequestTimeout(20 * 1000);
+
+        return new RestTemplate(requestFactory);
     }
 
 }

@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import persion.bleg.mybatis.mp.BaseEntity;
 
 /**
  * @author shiyuquan
@@ -17,7 +18,7 @@ import lombok.ToString;
 @TableName("t_user")
 @ApiModel(value = "User", description = "测试用户表")
 @ToString
-public class User extends persion.bleg.dockerdemo.base.BaseEntity {
+public class User extends BaseEntity {
 
     @TableId(type = IdType.AUTO)
     private long id;

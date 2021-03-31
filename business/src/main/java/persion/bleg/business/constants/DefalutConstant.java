@@ -9,10 +9,10 @@ public class DefalutConstant {
     private DefalutConstant() {}
 
     /** 默认请求成功的返回值 */
-    public static final Integer RESPONSE_SUCCESS_CODE = 0;
+    public static final String RESPONSE_SUCCESS_CODE = "0";
 
     /** 默认请求失败的返回值 */
-    public static final Integer RESPONSE_FAILED_CODE = -1;
+    public static final String RESPONSE_FAILED_CODE = "-1";
 
     /** 传输体是否加密的标识，设置于http header */
     public static final String ENCRYPT_BODY_FLAG = "encryption";

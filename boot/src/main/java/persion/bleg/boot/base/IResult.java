@@ -9,7 +9,7 @@ package persion.bleg.boot.base;
 public interface IResult<T> {
 
     /** 获取返回码 */
-    Integer getCode();
+    String getCode();
 
     /** 获取返回消息 */
     String getMsg();

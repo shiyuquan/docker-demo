@@ -24,20 +24,23 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public IResult<Object> handleException(Exception e, HttpServletRequest request, HttpServletResponse response) {
-        Integer code = SERVER_ERROR.getCode();
+        String code = SERVER_ERROR.getCode();
         String msg = SERVER_ERROR.getMsg();
         Object data = "";
-        log.error("GlobalExceptionHandler: uri: {}, method: {}", request.getRequestURI(), request.getMethod());
+
+        String uri = request.getRequestURI();
+        String method = request.getMethod();
+
         if (e instanceof BlegException) {
             BlegException blegException = (BlegException) e;
             code = blegException.getCode();
             msg = blegException.getMsg();
             data = blegException.getData();
-            log.error("GlobalExceptionHandler: code: {}, msg: {}", code, msg);
+            log.error("MyException: reqUri: {} reqMethod: {} resCode: {}, resMsg: {}", uri, method, code, msg);
         }
-        log.error("GlobalExceptionHandler: ", e);
-        response.setStatus(500);
-        return new Result<Object>(code, msg, data);
+
+        log.error("Exception: ", e);
+        return new Result<>(code, msg, data, e.getMessage());
     }
 
 }

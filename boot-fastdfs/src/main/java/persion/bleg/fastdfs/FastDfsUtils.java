@@ -136,7 +136,7 @@ public class FastDfsUtils {
             storageServer = trackerClient.getStoreStorage(trackerServer, groupName);
             storageClient = new StorageClient(trackerServer, storageServer);
         } catch (Exception e) {
-            throw new BlegException(500, "获取 StorageClient 失败 ");
+            throw new BlegException("获取 StorageClient 失败 ");
         }
         return storageClient;
     }
